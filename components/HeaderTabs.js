@@ -4,7 +4,10 @@ import React, { useState } from 'react'
 export default function HeaderTabs() {
   const[activeTab, setActiveTab] = useState("Delivery");
   return (
-    <View style={{flexDirection: "row", alignSelf: "center"}}>
+    <View style={{
+        flexDirection: "row",
+        alignSelf: "center",
+        marginTop: 10}}>
       <HeaderButton
        text="Delivery" 
        btnColor="black" 
@@ -14,7 +17,7 @@ export default function HeaderTabs() {
 
       <HeaderButton 
       text="Pickup" 
-      btnColor="white" t
+      btnColor="white" 
       textColor="black"
       activeTab={activeTab} 
       setActiveTab={setActiveTab}
