@@ -49,8 +49,7 @@ export default function Categories() {
             style={{
               alignItems: 'center',
               marginRight: 30,
-            }}
-          >
+            }}>
             <Image
               source={item.image}
               style={{
