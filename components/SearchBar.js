@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 
-export default function SearchBar() {
+export default function SearchBar({cityHandler}) {
   return (
     <View
     style ={{
@@ -13,6 +13,13 @@ export default function SearchBar() {
         flexDirection: "row"
     }}>
      <GooglePlacesAutocomplete
+     query={{key: "AIzaSyBv4-IGvj3vMh8K3GeTm4rwP5sVOxCCEUY"}}
+     onPress={(data, details=null) =>{
+        console.log(data.description)
+        console.log(data.description.split(',')[0])
+        const city = data.description.split(',')[0]
+        cityHandler(city);
+     }}
         placeholder='Search Bar'
         styles ={{
             textInput: {

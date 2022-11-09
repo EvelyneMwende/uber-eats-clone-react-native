@@ -11,11 +11,13 @@ const YELP_API_KEY =
 
 export default function Home() {
   const [restaurantData, setRestaurantData] = useState(localRestaurants);
+  const [city, setCity] = useState("San Francisco");
+  const [activeTab, setActiveTab] = useState("Delivery");
 
   const getRestaurantsFromYelp =() =>{
     // URL where we are GETTING/FETCHNG data from
     const yelpurl = 
-    'https://api.yelp.com/v3/businesses/search?term=restaurant&location=LosAngeles'
+    `https://api.yelp.com/v3/businesses/search?term=restaurant&location=${city}`
 
     // Pass in YELP API credentials
   const apiOptions ={
@@ -27,7 +29,9 @@ export default function Home() {
 
   return fetch(yelpurl, apiOptions)
   .then((res) => res.json())
-  .then((json) => setRestaurantData(json.businesses))
+  .then((json) => setRestaurantData(
+    json.businesses.filter((business)=> 
+    business.transactions.includes(activeTab.toLowerCase())))) //filter restaurants based on the state of the top bar DELIVERY or PICKUP
 
   }
 
@@ -35,7 +39,8 @@ export default function Home() {
 
   useEffect(() => {
     getRestaurantsFromYelp();
-  }, [])
+  }, [city, activeTab]) //looks for a change in the city variable or a change in the active header tab
+  //when it updates the function is ran again
 
   
 
@@ -48,14 +53,16 @@ export default function Home() {
     >
       {/* displays  content from HeaderTabs in the COMPONENTS folder */}
       <View style={{ backgroundColor: 'white', padding: 15 }}>
-        <HeaderTabs />
-        <SearchBar />
+        <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
+        <SearchBar cityHandler ={setCity}/>
       </View>
 
       <ScrollView showVerticalScrollIndicator={false}>
         <Categories />
         {/* RestaurantItems takes in a props with the name RestaurantData */}
-        <RestaurantItems restaurantData={restaurantData}/>
+        <RestaurantItems 
+        restaurantData={restaurantData}
+        />
       </ScrollView>
     </SafeAreaView>
   )
