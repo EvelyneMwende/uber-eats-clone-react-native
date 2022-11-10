@@ -70,12 +70,16 @@ export default function MenuItems() {
   return (
     <>
       {foods.map((food, index) => (
-        <View key={index}>
+        <View key={index} style={{
+          marginBottom:30
+        }}>
           <View style={styles.menuItemStyle}>
             <FoodInfo food={food} />
             <FoodImage food={food} />
           </View>
-          <Divider width={0.5} orientation="vertical" />
+          <Divider width={0.5} orientation="vertical" style={{
+            marginHorizontal: 20,
+          }} />
         </View>
       ))}
     </>
